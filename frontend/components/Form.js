@@ -9,7 +9,7 @@ export default class Form extends React.Component {
   constructor () {
     super()
     this.state = {
-      taskText: ""
+      taskName: ""
     }
   }
 
@@ -17,13 +17,14 @@ export default class Form extends React.Component {
     evt.preventDefault()
     this.props.addTask(evt, this.state.taskName)
     this.setState({
-      taskText: ""
+      taskName: ""
     })
   };
 
   onChange = evt => {
     this.setState({
-      taskText: evt.target.value
+      ...this.state,
+      taskName: evt.target.value
     })
   };
 
@@ -33,7 +34,7 @@ export default class Form extends React.Component {
 
     return (
       <>
-        <form onSubmit={ this.onSubmit }>
+        <form>
           <input
             type="text"
             name="task"
@@ -41,7 +42,7 @@ export default class Form extends React.Component {
             value={ taskText }
             onChange={ this.onChange }
           />
-          <button> add task </button>
+          <button onClick={ this.onSubmit }> add task </button>
         </form>
     </>
     )

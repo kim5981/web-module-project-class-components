@@ -28,6 +28,7 @@ export default class App extends React.Component {
       completed: false
     }
     this.setState({
+      ...this.state,
       toDos: [ ...this.state.toDos, newTask ]
     })
   }
