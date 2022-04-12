@@ -10,7 +10,7 @@ export default class Todo extends React.Component {
          className={ ` task${ task.completed ? "completed" : "" } ` }
         onClick={ () => toggleCompleted( task.id ) }
       >
-        <li> { task.taskName } </li>
+        <li> { task.taskName } { task.completed ? <span>☑</span> : <span></span> } </li>
       </div>
     )
   }
