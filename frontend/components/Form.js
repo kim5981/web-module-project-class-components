@@ -5,11 +5,35 @@ import React from 'react'
 // to-do list should re-render w added to-do item
 
 export default class Form extends React.Component {
+
+  onSubmit = evt => {
+    evt.preventDefault()
+  }
+
+  onChange = evt => {
+
+  }
+
   render() {
+
     return (
+    <>
+          <h1> To-Do:</h1>
       <div>
-        Form
-      </div>
+        <form onSubmit={ this.onSubmit }>
+          <ul></ul>
+          <input
+            id="todoInput"
+            type="text"
+            placeholder="type to-do"
+            value=""
+            onChange={ this.onChange }
+          />
+          <button> submit </button>
+        </form>
+       </div>
+       <button> completed {/** ternary to show/ hide completed  */} </button>
+    </>
     )
   }
 }
