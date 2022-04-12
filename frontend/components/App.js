@@ -32,17 +32,23 @@ export default class App extends React.Component {
     })
   }
 
+  clearTasks = () => {
+    this.setState({
+      ...this.state,
+      toDos: this.state.toDos.filter( toDo => {
+        return toDo.completed === false
+    } )
+  })
+  }
+
   toggleCompleted = id => {
     this.setState({
-      toDos: this.state.toDos.map( toDo => {
-        if ( id === toDo.id ) {
-          return {
-            ...toDo, 
-          completed: !toDo.completed
-          }
+      toDos: this.state.toDos.map( task => {
+        if ( id === task.id ) {
+          return { ...task, completed: !task.completed }
         }
-        return toDo;
-      })
+        return task
+      } )
     })
   }
 
@@ -55,11 +61,11 @@ export default class App extends React.Component {
         <Form addTask={ this.addTask } />
       </div>
         
-        <List 
+        <List
           tasks={ this.state.toDos }
-          toggleCompleted={ this.toggleCompleted }
+          toggleCompleted = { this.toggleCompleted }    
         />
-        <button className="clear"> Clear Completed </button>
+        <button onClick={ this.clearTasks }> Clear Completed </button>
       </>
     )
   }
