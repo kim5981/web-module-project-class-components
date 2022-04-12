@@ -24,10 +24,32 @@ const initialList = {
 
 export default class App extends React.Component {
   state = initialList
+
+  changeInput = ( key, value ) => {
+    this.setState( {
+      ...this.state, form: { ...this.state.form, [ key ]: value }
+    } )
+  }
+
+  addToDo = () => {
+
+    const newToDo = {
+      id: getIndex(),
+      todoInput: this.state.todoInput
+    }
+
+    this.setState({
+      ...this.state,
+        form: initialList.form, 
+        toDos: [ ...toDos, newToDo ]
+    })
+  }
+
   render() {
+    console.log("state is: ", this.state);
     return (
       <>
-        <Form />
+        <Form onChange={ this.changeInput } values={ this.state.form }  onSubmit={ this.addToDo } />
       </>
     )
   }
