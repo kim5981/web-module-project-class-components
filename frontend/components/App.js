@@ -1,30 +1,24 @@
 import React from 'react'
 import Form from "./Form"
+import List from "./TodoList"
 
-/**
- *  all app data, handler fn's stored here 
- */
 
-// create id's
 let index = 0;
 const getIndex = () => index++
-//set state
+
 const toDos = [
-  { id: getIndex(), todoInput: "module project" },
-  { id: getIndex(), todoInput: "file taxes" }
+  { id: getIndex(), todoInput: "module project", completed: false },
+  { id: getIndex(), todoInput: "file taxes", completed: false }
 ];
-const initialList = {
-   toDos,
-   form: {
-    id: getIndex(),
-    todoInput:  "",
-    completed: false
-   }
-  }
 
 
 export default class App extends React.Component {
-  state = initialList
+  constructor() {
+    super()
+    this.state = {
+      toDos: toDos
+    }
+  }
 
   changeInput = ( key, value ) => {
     this.setState( {
@@ -32,26 +26,26 @@ export default class App extends React.Component {
     } )
   }
 
-  addToDo = () => {
+  addToDo = (task) => {
 
-    const newToDo = {
+    const newTask = {
       id: getIndex(),
-      todoInput: this.state.todoInput,
+      name: task,
       completed: false
     }
 
     this.setState({
-      ...this.state,
-        form: initialList.form, 
-        toDos: [ ...this.state.toDos, newToDo ]
+      ...this.state, 
+        toDos: [ ...this.state.toDos, newTask ]
     })
   }
 
   toggleCompleted = id => {
     //map over array, when item we clicked is found, toggle completed field
-    // else return item 
+    // else return elem 
+    const { toDos } = this.state;
     this.setState({
-      toDos: this.state.toDos.map( toDo => {
+      toDos: toDos.map( toDo => {
         if ( id === toDo.id ) {
           return {
             ...toDo, 
@@ -68,7 +62,15 @@ export default class App extends React.Component {
     console.log("state is: ", this.state);
     return (
       <>
-        <Form onChange={ this.changeInput } values={ this.state.form }  onSubmit={ this.addToDo } />
+      <div>
+        <h1>Let&apos;s Get Stuff Done!</h1>
+        <Form addToDo={ this.addToDo } />
+      </div>
+        
+        <List 
+          tasks={ this.state.toDos }
+          toggleCompleted={ this.toggleCompleted }
+        />
       </>
     )
   }

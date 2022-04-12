@@ -5,6 +5,13 @@ import React from 'react'
 // to-do list should re-render w added to-do item
 
 export default class Form extends React.Component {
+  //set state for form
+  constructor () {
+    super()
+    this.state = {
+      taskText: ""
+    }
+  }
 
   onSubmit = evt => {
     evt.preventDefault()
@@ -12,17 +19,17 @@ export default class Form extends React.Component {
   }
 
   onChange = evt => {
-    const { id, value } = evt.target
-    this.props.onChange( id,value )
+    this.setState({
+      taskText: evt.target.value
+    })
   }
 
   render() {
 
-    const { values } = this.props; 
+    const { taskText } = this.state; 
 
     return (
     <>
-          <h1> To-Do:</h1>
       <div>
         <form onSubmit={ this.onSubmit }>
           <ul></ul>
@@ -30,7 +37,7 @@ export default class Form extends React.Component {
             id="todoInput"
             type="text"
             placeholder="type to-do"
-            value={ values.todoInput }
+            value={ taskText }
             onChange={ this.onChange }
           />
           <button> submit </button>
