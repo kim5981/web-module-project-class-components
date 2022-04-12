@@ -7,8 +7,8 @@ let index = 0;
 const getIndex = () => index++
 
 const toDos = [
-  { id: getIndex(), todoInput: "module project", completed: false },
-  { id: getIndex(), todoInput: "file taxes", completed: false }
+  { id: getIndex(), taskName: "module project", completed: false },
+  { id: getIndex(), taskName: "file taxes", completed: false }
 ];
 
 
@@ -20,32 +20,21 @@ export default class App extends React.Component {
     }
   }
 
-  changeInput = ( key, value ) => {
-    this.setState( {
-      ...this.state, form: { ...this.state.form, [ key ]: value }
-    } )
-  }
 
-  addToDo = (task) => {
-
+  addTask = ( evt, task ) => {
     const newTask = {
       id: getIndex(),
-      name: task,
+      taskName: task,
       completed: false
     }
-
     this.setState({
-      ...this.state, 
-        toDos: [ ...this.state.toDos, newTask ]
+      toDos: [ ...this.state.toDos, newTask ]
     })
   }
 
   toggleCompleted = id => {
-    //map over array, when item we clicked is found, toggle completed field
-    // else return elem 
-    const { toDos } = this.state;
     this.setState({
-      toDos: toDos.map( toDo => {
+      toDos: this.state.toDos.map( toDo => {
         if ( id === toDo.id ) {
           return {
             ...toDo, 
@@ -55,7 +44,6 @@ export default class App extends React.Component {
         return toDo;
       })
     })
-
   }
 
   render() {
@@ -64,13 +52,14 @@ export default class App extends React.Component {
       <>
       <div>
         <h1>Let&apos;s Get Stuff Done!</h1>
-        <Form addToDo={ this.addToDo } />
+        <Form addTask={ this.addTask } />
       </div>
         
         <List 
           tasks={ this.state.toDos }
           toggleCompleted={ this.toggleCompleted }
         />
+        <button className="clear"> Clear Completed </button>
       </>
     )
   }

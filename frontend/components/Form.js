@@ -15,35 +15,34 @@ export default class Form extends React.Component {
 
   onSubmit = evt => {
     evt.preventDefault()
-    this.props.onSubmit()
-  }
+    this.props.addTask(evt, this.state.taskName)
+    this.setState({
+      taskText: ""
+    })
+  };
 
   onChange = evt => {
     this.setState({
       taskText: evt.target.value
     })
-  }
+  };
 
   render() {
 
     const { taskText } = this.state; 
 
     return (
-    <>
-      <div>
+      <>
         <form onSubmit={ this.onSubmit }>
-          <ul></ul>
           <input
-            id="todoInput"
             type="text"
+            name="task"
             placeholder="type to-do"
             value={ taskText }
             onChange={ this.onChange }
           />
-          <button> submit </button>
+          <button> add task </button>
         </form>
-       </div>
-       <button> completed {/** ternary to show/ hide completed  */} </button>
     </>
     )
   }
