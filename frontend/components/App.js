@@ -17,7 +17,8 @@ const initialList = {
    toDos,
    form: {
     id: getIndex(),
-    todoInput:  ""
+    todoInput:  "",
+    completed: false
    }
   }
 
@@ -35,14 +36,32 @@ export default class App extends React.Component {
 
     const newToDo = {
       id: getIndex(),
-      todoInput: this.state.todoInput
+      todoInput: this.state.todoInput,
+      completed: false
     }
 
     this.setState({
       ...this.state,
         form: initialList.form, 
-        toDos: [ ...toDos, newToDo ]
+        toDos: [ ...this.state.toDos, newToDo ]
     })
+  }
+
+  toggleCompleted = id => {
+    //map over array, when item we clicked is found, toggle completed field
+    // else return item 
+    this.setState({
+      toDos: this.state.toDos.map( toDo => {
+        if ( id === toDo.id ) {
+          return {
+            ...toDo, 
+          completed: !toDo.completed
+          }
+        }
+        return toDo;
+      })
+    })
+
   }
 
   render() {
